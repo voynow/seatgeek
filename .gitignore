@@ -1,2 +1,3 @@
 venv
 secrets_manager.py
+__pycache__
