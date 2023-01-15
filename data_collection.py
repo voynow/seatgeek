@@ -39,6 +39,7 @@ def extract_data_from_urls():
         driver.get(url)
         driver.maximize_window()
         driver.execute_script("document.body.style.zoom='5%'")
+        driver.implicitly_wait(10)
         time.sleep(1)
 
         text = driver.find_element(By.ID, '__next').text
@@ -120,5 +121,5 @@ def etl():
     clean_data = cleanse(raw_data)
     structured_data = apply_schema(clean_data)
 
-    return structured_data
+    return {key: df.to_json() for key, df in structured_data.items()}
     
