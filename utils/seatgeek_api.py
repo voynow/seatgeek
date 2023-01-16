@@ -1,5 +1,5 @@
 import requests
-import secrets_manager
+import utils.secrets_manager as secrets_manager
 
 
 def get_params():
