@@ -1,4 +1,4 @@
-import api_utils
+import utils.seatgeek_api as seatgeek_api
 import json
 import pandas as pd
 import requests
@@ -13,6 +13,7 @@ from selenium.webdriver.chrome.options import Options
 
 options = Options()
 options.add_argument('--headless')
+options.add_argument('log-level=3')
 
 title_string = " at Philadelphia 76ers"
 remove_strings = [
@@ -105,7 +106,7 @@ def validate_data(data):
 def etl():
     """ pipeline for data extraction and transformation
     """
-    resp = api_utils.get_76ers_games()
+    resp = seatgeek_api.get_76ers_games()
     urls = [event['url'] for event in resp['events']]
 
     driver = create_driver()
