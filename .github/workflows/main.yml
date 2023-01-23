@@ -7,7 +7,7 @@ on:
 
 jobs:
 
-  deploy_source:
+  deploy_seatgeek-api-lambda:
     name: deploy seatgeek-api-lambda from source
     runs-on: ubuntu-latest
     steps:
@@ -22,7 +22,7 @@ jobs:
           function_name: seatgeek-api-lambda
           source: api-lambda
 
-  deploy_source:
+  deploy_seatgeek-ingestion-lambda:
     name: deploy seatgeek-ingestion-lambda from source
     runs-on: ubuntu-latest
     steps:
@@ -37,7 +37,7 @@ jobs:
           function_name: seatgeek-ingestion-lambda
           source: ingestion-lambda
 
-  deploy_source:
+  deploy_seatgeek-transformation-lambda:
     name: deploy seatgeek-transformation-lambda from source
     runs-on: ubuntu-latest
     steps:
