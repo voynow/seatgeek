@@ -1,8 +1,7 @@
 import json
 
 def lambda_handler(event, context):
-    # test comment
-    return {
-        'statusCode': 200,
-        'body': json.dumps('Hello from Lambda!')
-    }
+
+    return [{
+        "url": "https://seatgeek.com/nets-at-76ers-tickets/1-25-2023-philadelphia-pennsylvania-wells-fargo-center/nba/5775973",
+    }]
