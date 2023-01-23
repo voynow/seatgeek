@@ -1,5 +1,4 @@
 
-import utils.seatgeek_api as seatgeek_api
 import json
 import requests
 import time
