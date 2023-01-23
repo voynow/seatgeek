@@ -4,7 +4,13 @@ import utils
 def lambda_handler(event, context):
     """
     """
+    url = event['url']
     driver = utils.create_driver_helper()
-    raw_data = utils.extract(driver, event['url'])
+    raw_data = utils.extract(driver, url)
 
-    return raw_data
+    response = {
+        "url": url,
+        "raw_data": raw_data
+    }
+
+    return response
