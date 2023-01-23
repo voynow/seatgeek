@@ -20,7 +20,7 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: us-east-1
           function_name: seatgeek-api-lambda
-          source: api-lambda
+          source: api-lambda/*
 
   deploy_seatgeek-ingestion-lambda:
     name: deploy seatgeek-ingestion-lambda from source
@@ -35,7 +35,7 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: us-east-1
           function_name: seatgeek-ingestion-lambda
-          source: ingestion-lambda
+          source: ingestion-lambda/*
 
   deploy_seatgeek-transformation-lambda:
     name: deploy seatgeek-transformation-lambda from source
@@ -50,4 +50,4 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: us-east-1
           function_name: seatgeek-transformation-lambda
-          source: transformation-lambda
+          source: transformation-lambda/*
