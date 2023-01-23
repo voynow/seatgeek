@@ -1,8 +1,10 @@
 import json
+import utils
 
 def lambda_handler(event, context):
-    # test comment
-    return {
-        'statusCode': 200,
-        'body': json.dumps('Hello from Lambda!')
-    }
+    """
+    """
+    driver = utils.create_driver_helper()
+    raw_data = utils.extract(driver, event['url'])
+
+    return raw_data
