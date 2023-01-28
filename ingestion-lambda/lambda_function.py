@@ -16,7 +16,7 @@ def lambda_handler(event, context):
         "title": title,
         "url": url,
         "datetime_utc": datetime_utc,
-        "raw_data": "temp_NONE"
+        "raw_data": structured_data
     }
 
     return response
