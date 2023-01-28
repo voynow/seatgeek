@@ -11,4 +11,4 @@ def lambda_handler(event, context):
     for obj in resp['events']:
         event_data.append({key: obj[key] for key in keys})
 
-    return [event_data[0]]
+    return [event_data[:3]]
