@@ -1,12 +1,14 @@
 import json
 
+import utils
+
 def lambda_handler(event, context):
 
-    return [
-        {
-            "url": "https://seatgeek.com/nets-at-76ers-tickets/1-25-2023-philadelphia-pennsylvania-wells-fargo-center/nba/5775973",
-        },
-        {
-            "url": "https://seatgeek.com/nuggets-at-76ers-tickets/1-28-2023-philadelphia-pennsylvania-wells-fargo-center/nba/5775975",
-        }
-    ]
+    keys = ["title", "url", "datetime_utc"]
+    event_data = []
+
+    resp = utils.get_76ers_games()
+    for obj in resp['events']:
+        event_data.append({key: obj[key] for key in keys})
+
+    return event_data
