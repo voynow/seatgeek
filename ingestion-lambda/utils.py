@@ -75,6 +75,7 @@ def validate_data(data):
 
     for l in lens:
         if l != lens[0]:
+            print(data)
             raise ValueError("(Validation Failure) Column length mismatch")
     return data
 
