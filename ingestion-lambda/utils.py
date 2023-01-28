@@ -38,7 +38,7 @@ def create_driver_helper():
     return driver
 
 
-def extract(driver, url):
+def extract(url):
     """ Get seatgeek urls from api, collect text from each webpage
     """
     driver = create_driver_helper()
