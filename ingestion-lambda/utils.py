@@ -1,4 +1,5 @@
 
+import boto3
 import json
 import requests
 import time
@@ -20,7 +21,8 @@ remove_strings = [
     "Private Restrooms",
     "Includes access to a buffet, Includes Parking",
     "Limited view",
-    "In-Seat Wait Service, Private Restrooms"
+    "In-Seat Wait Service, Private Restrooms",
+    "'Search as I move the map'"
 ]
 
 
@@ -49,8 +51,9 @@ def extract(url):
     driver.implicitly_wait(10)
     time.sleep(1)
 
-    text = driver.find_element(By.ID, '__next').text
-    return text.split("\n")
+    text = driver.find_element(By.ID, '__next').text.split("\n")
+
+    return text
 
 
 def cleanse(dataset):
@@ -90,3 +93,19 @@ def apply_schema(dataset):
         data_collection[col].append(row)
     
     return validate_data(data_collection)
+
+
+def dump_error(title, dt, error):
+
+    s3 = boto3.resource('s3')
+    bucket = "seatgeek-ticket-errors"
+    replace_strs = [" ", ":", "."]
+
+    key = title + dt
+    for string in replace_strs:
+        key = key.replace(string, "-")
+
+    s3_obj = s3.Object(bucket, key)
+    resp = s3_obj.put(Body=json.dumps(error))
+
+    return resp
