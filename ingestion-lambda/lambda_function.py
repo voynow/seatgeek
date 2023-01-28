@@ -13,15 +13,14 @@ def lambda_handler(event, context):
         raw_data = utils.extract(url)
         clean_data = utils.cleanse(raw_data)
         structured_data = utils.apply_schema(clean_data)
-    except Exception as e:
-        utils.dump_error(title, str(datetime.datetime.now()), e)
-        structured_data = {}
+    except Exception as err:
+        structured_data = str(err)
 
     response = {
         "title": title,
         "url": url,
         "datetime_utc": datetime_utc,
-        "raw_data": structured_data
+        "data": structured_data
     }
 
     return response
