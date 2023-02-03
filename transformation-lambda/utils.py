@@ -24,7 +24,10 @@ def put_object(data, bucket, key=None):
         key = create_key()
     
     s3_obj = s3.Object(bucket, key)
-    resp = s3_obj.put(Body=json.dumps(data))
+    s3_obj.put(Body=json.dumps(data))
     print(f"Object stored at: s3://{bucket}/{key}")
 
-    return resp
+    return {
+        "bucket": bucket, 
+        "key": key,
+    }
