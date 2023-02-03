@@ -4,6 +4,6 @@ import utils
 def lambda_handler(event, context):
 
     bucket = "seatgeek-tickets"
-    utils.put_object(event, bucket)
+    resp = utils.put_object(event, bucket)
     
-
+    return resp

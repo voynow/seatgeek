@@ -1,9 +1,10 @@
 
 name: deploy to lambda
 on:
-  push:
-    branches:
-      - main
+  push
+  # push:
+    # branches:
+      # - main
 
 jobs:
 
