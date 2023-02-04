@@ -78,12 +78,14 @@ def check_for_deals(obj):
     price = section[section['price'] < max_price]
 
     if not price.empty:
-        return price.to_json(orient="records")
+        return json.loads(price.to_json(orient="records"))
     else:
         return [None]
 
 
 def price_alert(obj):
+    """
+    """
     deals = check_for_deals(obj)
 
     resps = []
