@@ -1,9 +1,10 @@
 
 name: deploy to lambda
 on:
-  push:
-    branches:
-      - main
+  [push]
+  # push:
+    # branches:
+      # - main
 
 jobs:
 
@@ -51,3 +52,18 @@ jobs:
           aws_region: us-east-1
           function_name: seatgeek-transformation
           source: transformation-lambda/*
+
+  deploy_seatgeek_price_alerts:
+    name: deploy price alert lambda from source
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout source code
+        uses: actions/checkout@v1
+      - name: default deploy
+        uses: appleboy/lambda-action@master
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: us-east-1
+          function_name: seatgeek-price-alert
+          source: price-alert-lambda/*
