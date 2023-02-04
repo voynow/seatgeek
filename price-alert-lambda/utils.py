@@ -43,6 +43,7 @@ preprocessing = [
 
 sections_of_interest = ['101', '113', '114', '112', '124', '102']
 max_price = 200
+min_score = 9.9
 
 def get_object(event):
     """ Use event info to access s3 data
@@ -73,7 +74,7 @@ def transform(data):
 def check_for_deals(obj):
     """
     """
-    deal = obj[obj['score'] > 9.2]
+    deal = obj[obj['score'] >= min_score]
     section = deal[deal['section'].apply(lambda x: x in sections_of_interest)]
     price = section[section['price'] < max_price]
 
