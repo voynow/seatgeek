@@ -2,10 +2,11 @@
 import boto3
 import datetime
 import json
-
+import pandas as pd
 
 
 s3 = boto3.resource('s3')
+sns = boto3.client('sns')
 
 preprocessing = [
     {
@@ -47,13 +48,14 @@ def get_object(event):
     """ Use event info to access s3 data
     """
     bucket = event['bucket']
-    key = f"{event['key']}.json"
+    key = event['key']
 
     obj = s3.Object(bucket, key)
     return json.loads(obj.get()['Body'].read())
 
 def transform(data):
-
+    """
+    """
     dfs = []
     for game in data:
         if not isinstance(game['data'], str):
@@ -68,10 +70,29 @@ def transform(data):
     return df
 
 
-def check_price(obj):
-    deal = obj[obj['score'] > 9.4]
+def check_for_deals(obj):
+    """
+    """
+    deal = obj[obj['score'] > 9.2]
     section = deal[deal['section'].apply(lambda x: x in sections_of_interest)]
     price = section[section['price'] < max_price]
 
     if not price.empty:
         return price.to_json(orient="records")
+    else:
+        return [None]
+
+
+def price_alert(obj):
+    deals = check_for_deals(obj)
+
+    resps = []
+    for deal in deals:
+        if deal:
+            response = sns.publish(
+                TargetArn="arn:aws:sns:us-east-1:498969721544:seatgeek-tickets",
+                Message=json.dumps({'default': json.dumps(deal)}),
+                MessageStructure='json',
+            )
+            resps.append(response)
+    return resps
