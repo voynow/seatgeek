@@ -8,6 +8,15 @@ import pandas as pd
 s3 = boto3.resource('s3')
 sns = boto3.client('sns')
 
+def custom_num_tickets_fn(x):
+    x_split = x.split(" ")
+    try:
+        num = x_split[2]
+    except IndexError:
+        num = x
+    return num
+
+
 preprocessing = [
     {
         "update_col": "price", 
@@ -22,7 +31,7 @@ preprocessing = [
     {
         "update_col": "num_tickets", 
         "from_col": "num_tickets",
-        "fn": lambda x: x.split(" ")[2],
+        "fn": lambda x: custom_num_tickets_fn(x),
     },
     {
         "update_col": "section", 
@@ -41,6 +50,7 @@ preprocessing = [
     },
 ]
 
+min_score = 9.9
 sections_of_interest = ['101', '113', '114', '112', '124', '102']
 max_price = 200
 
@@ -73,7 +83,8 @@ def transform(data):
 def check_for_deals(obj):
     """
     """
-    section = obj[obj['section'].apply(lambda x: x in sections_of_interest)]
+    deal = obj[obj['score'] >= min_score]
+    section = deal[deal['section'].apply(lambda x: x in sections_of_interest)]
     price = section[section['price'] < max_price]
 
     if not price.empty:
