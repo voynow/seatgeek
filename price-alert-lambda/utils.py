@@ -50,7 +50,7 @@ preprocessing = [
     },
 ]
 
-min_score = 9.9
+min_score = 9.5
 sections_of_interest = ['101', '113', '114', '112', '124', '102']
 max_price = 200
 
